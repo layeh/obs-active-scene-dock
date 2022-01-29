@@ -6,6 +6,7 @@
 ActiveSceneDock::ActiveSceneDock(QWidget *parent)
     : QDockWidget(parent), currentScene(nullptr), timerId(-1) {
   setFeatures(DockWidgetMovable | DockWidgetFloatable);
+  hide();
 
   sceneLabel = new QLabel(this);
   sceneLabel->setAlignment(Qt::AlignCenter);
