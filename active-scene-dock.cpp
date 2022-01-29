@@ -7,7 +7,7 @@
 OBS_DECLARE_MODULE()
 OBS_MODULE_AUTHOR("Tim Cooper")
 
-OBS_MODULE_USE_DEFAULT_LOCALE("obs-active-scene-dock", "en-US")
+OBS_MODULE_USE_DEFAULT_LOCALE("active-scene-dock", "en-US")
 
 const char *obs_module_name() { return "Active Scene Dock"; }
 
