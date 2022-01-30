@@ -13,11 +13,6 @@ const char *obs_module_name() { return "Active Scene Dock"; }
 
 const char *obs_module_description() { return obs_module_text("Description"); }
 
-struct program_data {
-  ActiveSceneDock *previewDock;
-  ActiveSceneDock *programDock;
-};
-
 static void frontend_event_preview(enum obs_frontend_event event,
                                    void *private_data) {
   const auto handleEvent = event == OBS_FRONTEND_EVENT_PREVIEW_SCENE_CHANGED ||
