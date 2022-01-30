@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(active-scene-dock)
+project(active-scene-dock VERSION 0.1.1)
 
 if(BUILD_OUT_OF_TREE)
     find_package(LibObs REQUIRED)
