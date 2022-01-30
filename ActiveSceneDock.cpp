@@ -27,6 +27,11 @@ ActiveSceneDock::ActiveSceneDock(QWidget *parent)
 
 ActiveSceneDock::~ActiveSceneDock() {
   if (currentScene) {
+    auto *signalHandler = obs_source_get_signal_handler(currentScene);
+    if (signalHandler) {
+      signal_handler_disconnect(signalHandler, "rename",
+                                &ActiveSceneDock::currentSceneRenamed, this);
+    }
     obs_source_release(currentScene);
   }
 }
@@ -37,6 +42,11 @@ void ActiveSceneDock::updateCurrentScene(obs_source_t *newScene,
     return;
   }
   if (currentScene) {
+    auto *signalHandler = obs_source_get_signal_handler(currentScene);
+    if (signalHandler) {
+      signal_handler_disconnect(signalHandler, "rename",
+                                &ActiveSceneDock::currentSceneRenamed, this);
+    }
     obs_source_release(currentScene);
     currentScene = nullptr;
   }
@@ -46,6 +56,12 @@ void ActiveSceneDock::updateCurrentScene(obs_source_t *newScene,
     sceneLabel->setText(QString::fromUtf8(name));
     obs_source_addref(newScene);
     currentScene = newScene;
+
+    auto *signalHandler = obs_source_get_signal_handler(newScene);
+    if (signalHandler) {
+      signal_handler_connect(signalHandler, "rename",
+                             &ActiveSceneDock::currentSceneRenamed, this);
+    }
 
     currentSceneTimer.start();
     if (timerId < 0) {
@@ -67,6 +83,14 @@ void ActiveSceneDock::timerEvent(QTimerEvent *event) {
     updateTimerText();
   } else {
     QDockWidget::timerEvent(event);
+  }
+}
+
+void ActiveSceneDock::currentSceneRenamed(void *data, calldata_t *cd) {
+  auto *dock = static_cast<ActiveSceneDock *>(data);
+  const auto *newName = calldata_string(cd, "new_name");
+  if (newName) {
+    dock->sceneLabel->setText(QString::fromUtf8(newName));
   }
 }
 

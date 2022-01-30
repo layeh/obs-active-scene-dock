@@ -20,5 +20,6 @@ public:
 
 protected:
   void timerEvent(QTimerEvent *event) override;
+  static void currentSceneRenamed(void *data, calldata_t *cd);
   void updateTimerText();
 };

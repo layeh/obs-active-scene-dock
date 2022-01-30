@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update scene label when scene is renamed
+
 ## 0.1.1
 
 - Change dock title to "Active Scene" from "Scene Timer"
